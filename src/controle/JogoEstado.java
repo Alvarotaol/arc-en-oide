@@ -1,6 +1,7 @@
 package controle;
 
 import logica.Bola;
+import logica.Grade;
 import logica.Plataforma;
 
 import org.newdawn.slick.GameContainer;
@@ -15,6 +16,7 @@ public class JogoEstado extends BasicGameState {
 	private final int estado;
 	private Plataforma plat;
 	private Bola bola;
+	private Grade grad;
 	public JogoEstado(int estado){
 		this.estado = estado;
 	}
@@ -24,6 +26,7 @@ public class JogoEstado extends BasicGameState {
 			throws SlickException {
 		plat = new Plataforma(gc.getWidth()/2 , gc.getHeight() - 40, 20, 100);
 		bola = new Bola(gc.getWidth() / 2, gc.getHeight() - 50, 10, new Vector2f(1, -1));
+		grad = new Grade(10, 10, gc.getWidth()/10, gc.getWidth()/15, 5);
 	}
 
 	@Override
@@ -32,6 +35,7 @@ public class JogoEstado extends BasicGameState {
 		g.fill(plat.getRec());
 		//System.out.println("(" + bola.getRec().getCenterX() + ", " + bola.getRec().getCenterY() + ")");
 		g.fill(bola.getRec());
+		grad.desenhar(g);
 	}
 
 	@Override

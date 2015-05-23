@@ -14,7 +14,7 @@ public class Bola {
 	
 	public void mover(int delta){
 		Vector2f d = new Vector2f(direc);
-		pos.setLocation(pos.getLocation().add(d.scale(2)));
+		pos.setLocation(pos.getLocation().add(d.scale(1.8f)));
 	}
 	
 	public void rebater(double ang){
