@@ -1,22 +1,20 @@
 package controle;
 
-import java.util.logging.Logger;
-
-import javax.swing.DebugGraphics;
-
+import logica.Bola;
 import logica.Plataforma;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
 public class JogoEstado extends BasicGameState {
 	private final int estado;
 	private Plataforma plat;
-	private int de = 1;
+	private Bola bola;
 	public JogoEstado(int estado){
 		this.estado = estado;
 	}
@@ -25,12 +23,15 @@ public class JogoEstado extends BasicGameState {
 	public void init(GameContainer gc, StateBasedGame sbg)
 			throws SlickException {
 		plat = new Plataforma(gc.getWidth()/2 , gc.getHeight() - 40, 20, 100);
+		bola = new Bola(gc.getWidth() / 2, gc.getHeight() - 50, 10, new Vector2f(1, -1));
 	}
 
 	@Override
 	public void render(GameContainer gc, StateBasedGame sbg, Graphics g)
 			throws SlickException {
 		g.fill(plat.getRec());
+		//System.out.println("(" + bola.getRec().getCenterX() + ", " + bola.getRec().getCenterY() + ")");
+		g.fill(bola.getRec());
 	}
 
 	@Override
@@ -42,6 +43,20 @@ public class JogoEstado extends BasicGameState {
 		}
 		if(in.isKeyDown(Input.KEY_D)){
 			plat.mover(delta/6);
+		}
+		bola.mover(1);
+		if(bola.getRec().getMaxX() >= gc.getWidth()){
+			bola.rebater(90);
+		}
+		if(bola.getRec().getMinX() <= 0){
+			bola.rebater(90);
+		}
+		if(bola.getRec().getMinY() <= 0){
+			bola.rebater(0);
+		}
+		//Versão simples do rebatimento
+		if(bola.getRec().intersects(plat.getRec())){
+			bola.rebater(0);
 		}
 	}
 

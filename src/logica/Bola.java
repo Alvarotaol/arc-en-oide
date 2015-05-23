@@ -12,11 +12,18 @@ public class Bola {
 		direc = dir;
 	}
 	
-	public void mover(){
-		pos.getLocation().add(direc); //pos.setLocation(
+	public void mover(int delta){
+		Vector2f d = new Vector2f(direc);
+		pos.setLocation(pos.getLocation().add(d.scale(2)));
 	}
 	
-	public void rebater(float ang){
-		direc.
+	public void rebater(double ang){
+		//System.out.print("Antes: (" + direc.x + ", " + direc.y + ") ");
+		direc.setTheta(360 + 2*ang - direc.getTheta());
+		//System.out.println("Depos: (" + direc.x + ", " + direc.y + ")");
+	}
+	
+	public Circle getRec() {
+		return pos;
 	}
 }
