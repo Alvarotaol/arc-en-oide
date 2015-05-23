@@ -4,6 +4,7 @@ import logica.Bola;
 import logica.Grade;
 import logica.Plataforma;
 
+import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
@@ -32,8 +33,10 @@ public class JogoEstado extends BasicGameState {
 	@Override
 	public void render(GameContainer gc, StateBasedGame sbg, Graphics g)
 			throws SlickException {
+		g.setColor(Color.orange);
 		g.fill(plat.getRec());
 		//System.out.println("(" + bola.getRec().getCenterX() + ", " + bola.getRec().getCenterY() + ")");
+		g.setColor(Color.lightGray);
 		g.fill(bola.getRec());
 		grad.desenhar(g);
 	}
@@ -58,6 +61,8 @@ public class JogoEstado extends BasicGameState {
 		if(bola.getRec().getMinY() <= 0){
 			bola.rebater(0);
 		}
+		
+		grad.colidir(bola);
 		//Versão simples do rebatimento
 		if(bola.getRec().intersects(plat.getRec())){
 			bola.rebater(0);
