@@ -27,7 +27,8 @@ public class JogoEstado extends BasicGameState {
 			throws SlickException {
 		plat = new Plataforma(gc.getWidth()/2 , gc.getHeight() - 40, 20, 100);
 		bola = new Bola(gc.getWidth() / 2, gc.getHeight() - 50, 10, new Vector2f(1, -1));
-		grad = new Grade(10, 10, gc.getWidth()/10, gc.getWidth()/15, 5);
+		grad = new Grade("fase1.txt");
+		//grad = new Grade(10, 10, gc.getWidth()/10, gc.getWidth()/15, 5);
 	}
 
 	@Override
@@ -65,7 +66,12 @@ public class JogoEstado extends BasicGameState {
 		grad.colidir(bola);
 		//Versão simples do rebatimento
 		if(bola.getRec().intersects(plat.getRec())){
-			bola.rebater(0);
+			double an = plat.getRec().getMaxX() - bola.getRec().getCenterX();
+			an = an * 150.0 / plat.getRec().getWidth();
+			an += 15;
+			
+			System.out.println(an);
+			bola.setAngulo(-an);
 		}
 	}
 

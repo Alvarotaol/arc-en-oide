@@ -1,5 +1,11 @@
 package logica;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.Scanner;
+
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.geom.Rectangle;
@@ -34,15 +40,47 @@ class Bloco {
 
 public class Grade {
 	private Bloco grade[][];
+	private int nBlocos;
 	
 	public Grade(int nx, int ny, int tx, int ty, int inter) {
 		grade = new Bloco[nx][ny];
+		nBlocos = 0;
 		//TODO Depois transformar isso num método de carregar fase
 		for(int i = 0; i < nx; i++){
 			for (int j = 0; j < ny; j++) {
 				grade[i][j] = new Bloco(i*(tx + inter) + inter,
 										j*(ty + inter) + inter, tx, ty, 1);
+				nBlocos++;
 			}
+		}
+	}
+	
+	public Grade(String arq){
+		try {
+			FileReader ar = new FileReader(arq);
+			BufferedReader br = new BufferedReader(ar);
+			Scanner sc = new Scanner(br);
+			
+			int nx = sc.nextInt(),
+				ny = sc.nextInt(),
+				tx = sc.nextInt(),
+				ty = sc.nextInt(),
+				inter = sc.nextInt();
+			grade = new Bloco[ny][nx];
+			nBlocos = 0;
+			for(int i = 0; i < nx; i++){
+				for (int j = 0; j < ny; j++) {
+					int batidas = sc.nextInt();
+					grade[j][i] = new Bloco(j*(tx + inter) + inter,
+											i*(ty + inter) + inter, tx, ty, batidas);
+					if(batidas != 0){
+						nBlocos++;
+					}
+				}
+			}
+			
+		} catch (IOException e){
+			System.out.println("Deu problema");
 		}
 	}
 	
@@ -59,6 +97,7 @@ public class Grade {
 			for (int j = 0; j < grade[i].length; j++) {
 				if(!grade[i][j].quebrado() && grade[i][j].getRec().intersects(bol.getRec())){
 					grade[i][j].bater();
+					if(grade[i][j].quebrado()) nBlocos--;
 					boolean d = bol.getRec().getCenterX() > grade[i][j].getRec().getMaxX(),
 							e = bol.getRec().getCenterX() < grade[i][j].getRec().getMinX(),
 							c = bol.getRec().getCenterY() < grade[i][j].getRec().getMinY(),

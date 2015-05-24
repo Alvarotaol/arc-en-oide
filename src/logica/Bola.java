@@ -17,6 +17,10 @@ public class Bola {
 		pos.setLocation(pos.getLocation().add(d.scale(1.8f)));
 	}
 	
+	public void setAngulo(double ang){
+		direc.setTheta(ang);
+	}
+	
 	public void rebater(double ang){
 		//System.out.print("Antes: (" + direc.x + ", " + direc.y + ") ");
 		direc.setTheta(360 + 2*ang - direc.getTheta());
