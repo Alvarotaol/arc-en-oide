@@ -27,10 +27,20 @@ class Bloco {
 	}
 	
 	public void desenhar(Graphics g){
-		if(acertos > 0 ){
+		switch (acertos) {
+		case 1:
 			g.setColor(Color.blue);
-			g.fill(pos);
+			break;
+		case 2:
+			g.setColor(Color.green);
+			break;
+		case 3:
+			g.setColor(Color.magenta);
+			break;
+		default:
+			return;
 		}
+		g.fill(pos);
 	}
 	
 	public boolean quebrado() {
@@ -45,7 +55,6 @@ public class Grade {
 	public Grade(int nx, int ny, int tx, int ty, int inter) {
 		grade = new Bloco[nx][ny];
 		nBlocos = 0;
-		//TODO Depois transformar isso num método de carregar fase
 		for(int i = 0; i < nx; i++){
 			for (int j = 0; j < ny; j++) {
 				grade[i][j] = new Bloco(i*(tx + inter) + inter,
